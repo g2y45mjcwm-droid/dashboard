@@ -6,7 +6,7 @@ const urlsToCache = [
   'https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js'
 ];
 
-// 瀹夎鏃剁紦瀛樿祫婧�
+// 安装时缓存资源
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -17,7 +17,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// 鎷︽埅璇锋眰锛屼紭鍏堜娇鐢ㄧ紦瀛�
+// 拦截请求，优先使用缓存
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
@@ -42,7 +42,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// 鏇存柊鏃舵竻鐞嗘棫缂撳瓨
+// 更新时清理旧缓存
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
