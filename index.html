@@ -77,6 +77,14 @@
         .install-banner .ib-icon { font-size: 28px; flex-shrink: 0; }
         .install-banner .ib-text { flex: 1; font-size: 13px; color: #ccc; line-height: 1.5; }
         .install-banner .ib-text strong { color: #00d2ff; }
+        .install-banner .ib-action-btn {
+            background: linear-gradient(135deg, #00d2ff, #7b2ff7); border: none;
+            color: #fff; padding: 6px 18px; border-radius: 8px;
+            font-size: 13px; font-weight: 600; cursor: pointer;
+            flex-shrink: 0; transition: all 0.2s; white-space: nowrap;
+        }
+        .install-banner .ib-action-btn:hover { opacity: 0.85; transform: scale(1.05); }
+        .install-banner .ib-action-btn:active { transform: scale(0.95); }
         .install-banner .ib-close {
             background: rgba(255,255,255,0.1); border: none; color: #999;
             width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
@@ -301,13 +309,14 @@
 </div>
 
 <!-- 安装引导条 -->
-<div class="install-banner" id="installBanner">
+<div class="install-banner" id="installBanner" onclick="showInstallGuide()" style="cursor:pointer">
     <div class="ib-icon">📲</div>
     <div class="ib-text">
         <strong>添加到桌面</strong>，像App一样使用<br>
         <span id="installHint"></span>
     </div>
-    <button class="ib-close" onclick="dismissInstall()">&times;</button>
+    <button class="ib-action-btn" onclick="event.stopPropagation();showInstallGuide()">安装</button>
+    <button class="ib-close" onclick="event.stopPropagation();dismissInstall()">&times;</button>
 </div>
 
 <!-- 工具栏 -->
@@ -325,7 +334,7 @@
 <div class="header">
     <h1>播出保障部故障设备及隐患清单</h1>
     <div class="subtitle">2026年度 · 数据看板</div>
-    <div class="update-time">数据更新时间：2026年06月28日 16:27</div>
+    <div class="update-time">数据更新时间：2026年06月28日 16:40</div>
 </div>
 
 <div class="stats-grid">
