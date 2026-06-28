@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dashboard-v202606281627';
+const CACHE_NAME = 'dashboard-v202606281640';
 const urlsToCache = [
   './',
   './index.html',
@@ -55,7 +55,7 @@ self.addEventListener('fetch', event => {
   }
 });
 
-// 更新时清理旧缓存
+// 更新时清理旧缓存 + 立即接管页面（首次访问即可触发安装提示）
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -67,6 +67,6 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
