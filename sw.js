@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dashboard-v1';
+const CACHE_NAME = 'dashboard-v202606281608';
 const urlsToCache = [
   './',
   './index.html',
@@ -11,7 +11,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache');
+        console.log('Opened cache:', CACHE_NAME);
         return cache.addAll(urlsToCache);
       })
   );
