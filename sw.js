@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dashboard-v202606281611';
+const CACHE_NAME = 'dashboard-v202606281620';
 const urlsToCache = [
   './',
   './index.html',
