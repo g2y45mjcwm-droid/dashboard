@@ -293,16 +293,16 @@
 <div class="header">
     <h1>播出保障部故障设备及隐患清单</h1>
     <div class="subtitle">2026年度 · 数据看板</div>
-    <div class="update-time">数据更新时间：2026年06月28日 15:57</div>
+    <div class="update-time">数据更新时间：2026年06月28日 16:07</div>
 </div>
 
 <div class="stats-grid">
-    <div class="stat-card total clickable" onclick="showDetail('全部')"><div class="value">11</div><div class="label">总设备/隐患数</div></div>
+    <div class="stat-card total clickable" onclick="showDetail('全部')"><div class="value">12</div><div class="label">总设备/隐患数</div></div>
     <div class="stat-card pending clickable" onclick="showDetail('待处理')"><div class="value">5</div><div class="label">待处理</div></div>
-    <div class="stat-card in-progress clickable" onclick="showDetail('维修中/解决中')"><div class="value">3</div><div class="label">维修中/解决中</div></div>
+    <div class="stat-card in-progress clickable" onclick="showDetail('维修中/解决中')"><div class="value">4</div><div class="label">维修中/解决中</div></div>
     <div class="stat-card resolved clickable" onclick="showDetail('已维修/已解决')"><div class="value">3</div><div class="label">已维修/已解决</div></div>
     <div class="stat-card unfixable clickable" onclick="showDetail('无法维修/无法解决')"><div class="value">0</div><div class="label">无法维修/无法解决</div></div>
-    <div class="stat-card rate"><div class="value">27.3%</div><div class="label">解决率</div></div>
+    <div class="stat-card rate"><div class="value">25.0%</div><div class="label">解决率</div></div>
 </div>
 
 <div class="charts-grid">
@@ -325,6 +325,7 @@
     <div class="filter-bar">
         <div class="month-filter" id="monthFilter">
             <button class="month-btn" onclick="filterByMonth('全部')">全部</button>
+            <button class="month-btn " onclick="filterByMonth('1月')">1月</button>
             <button class="month-btn " onclick="filterByMonth('5月')">5月</button>
             <button class="month-btn active" onclick="filterByMonth('6月')">6月</button>
         </div>
@@ -345,6 +346,19 @@
             </tr>
         </thead>
         <tbody id="tableBody">
+            <tr data-month="1月" style="display:none">
+                <td>1月</td>
+                <td>10演舞台区地屏</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>10演舞台区</td>
+                <td>无法正常显示</td>
+                <td>2026.5.19</td>
+                <td>厂家维修</td>
+                <td><span class="badge badge-in-progress status-badge" onclick="showDetail('维修中/解决中')">维修中/解决中</span></td>
+                <td>技术统筹组</td>
+            </tr>
             <tr data-month="5月" style="display:none">
                 <td>5月</td>
                 <td>10演舞台区地屏</td>
@@ -544,7 +558,7 @@ pieChart.setOption({
         avoidLabelOverlap: true,
         itemStyle: { borderRadius: 6, borderColor: 'rgba(15,12,41,0.8)', borderWidth: 2 },
         label: { color: '#ccc', fontSize: 12 },
-        data: [{ value: 5, name: "待处理" }, { value: 3, name: "维修中/解决中" }, { value: 3, name: "已维修/已解决" }]
+        data: [{ value: 5, name: "待处理" }, { value: 4, name: "维修中/解决中" }, { value: 3, name: "已维修/已解决" }]
     }]
 });
 
@@ -563,7 +577,7 @@ barChart.setOption({
         splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } }
     },
     series: [{
-        type: 'bar', data: [0, 0, 0, 0, 1, 10, 0, 0, 0, 0, 0, 0],
+        type: 'bar', data: [1, 0, 0, 0, 1, 10, 0, 0, 0, 0, 0, 0],
         itemStyle: {
             borderRadius: [4, 4, 0, 0],
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -584,12 +598,12 @@ teamChart.setOption({
         splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } }
     },
     yAxis: {
-        type: 'category', data: ["新闻制作组", "综合传输组"],
+        type: 'category', data: ["新闻制作组", "综合传输组", "技术统筹组"],
         axisLabel: { color: '#ccc', fontSize: 12 },
         axisLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } }
     },
     series: [{
-        type: 'bar', data: [6, 5],
+        type: 'bar', data: [6, 5, 1],
         itemStyle: {
             borderRadius: [0, 4, 4, 0],
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
@@ -644,7 +658,7 @@ function filterTable() {
     }
 }
 
-var allRecords = [{"month": "5月", "name": "10演舞台区地屏", "brand": "", "model": "", "code": "", "location": "10演舞台区", "desc": "无法正常显示", "date": "2026.5.19", "solution": "厂家维修", "status": "已维修/已解决", "team": "新闻制作组"}, {"month": "6月", "name": "P2录放像机", "brand": "松下", "model": "AJ-HPM200MC", "code": "X124395", "location": "3号演播室", "desc": "电源键故障", "date": "2026-06-22", "solution": "替换4号演播室同型号设备", "status": "已维修/已解决", "team": "新闻制作组"}, {"month": "6月", "name": "多格式解码器", "brand": "TANDBERG TV", "model": "RX8200/BAS", "code": "X074343", "location": "E-350 KU卫星车", "desc": "无法正常开机", "date": "2026-06-23", "solution": "此设备为E-350 KU卫星车备机", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "高清编码调制器", "brand": "TANDBERG TV", "model": "EN8040", "code": "X094362", "location": "E-350 KU卫星车", "desc": "偶发自动重启", "date": "2026-06-23", "solution": "此设备为E-350 KU卫星车备机", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "6楼UPS机房UPS上口无柴油发电机供电保障", "brand": "", "model": "", "code": "", "location": "", "desc": "", "date": "", "solution": "", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "3楼3号演播室UPS上口无柴油发电机供电保障", "brand": "", "model": "", "code": "", "location": "", "desc": "", "date": "", "solution": "", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "无工艺专用备用变压器", "brand": "", "model": "", "code": "", "location": "", "desc": "", "date": "", "solution": "", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "监视器", "brand": "尊正", "model": "LM-2461W", "code": "X133748", "location": "10号演播室标题监看", "desc": "无图像，有水平、宽条的大色块", "date": "2026.6.12", "solution": "替换备份设备", "status": "维修中/解决中", "team": "新闻制作组"}, {"month": "6月", "name": "吊挂系统", "brand": "华晨", "model": "", "code": "", "location": "10、11、12号演播室", "desc": "部分吊杆出现下降或上升不受控现象，11、12号演播室部分手动吊杆出现伸缩方管拉不出或自动下滑现象。", "date": "末次维保为2021年10月", "solution": "", "status": "维修中/解决中", "team": "新闻制作组"}, {"month": "6月", "name": "调音台控制面板", "brand": "斯泰克", "model": "AURATUS T2Z1", "code": "X132809", "location": "12号演播室主调音台", "desc": "输出模块频繁自动重启的现象，重启后主输出推子无法复位", "date": "2026.6.17", "solution": "", "status": "维修中/解决中", "team": "新闻制作组"}, {"month": "6月", "name": "抽湿机", "brand": "", "model": "", "code": "X164713", "location": "3楼配音间走廊", "desc": "报警", "date": "2026.6.18", "solution": "", "status": "已维修/已解决", "team": "新闻制作组"}];
+var allRecords = [{"month": "1月", "name": "10演舞台区地屏", "brand": "", "model": "", "code": "", "location": "10演舞台区", "desc": "无法正常显示", "date": "2026.5.19", "solution": "厂家维修", "status": "维修中/解决中", "team": "技术统筹组"}, {"month": "5月", "name": "10演舞台区地屏", "brand": "", "model": "", "code": "", "location": "10演舞台区", "desc": "无法正常显示", "date": "2026.5.19", "solution": "厂家维修", "status": "已维修/已解决", "team": "新闻制作组"}, {"month": "6月", "name": "P2录放像机", "brand": "松下", "model": "AJ-HPM200MC", "code": "X124395", "location": "3号演播室", "desc": "电源键故障", "date": "2026-06-22", "solution": "替换4号演播室同型号设备", "status": "已维修/已解决", "team": "新闻制作组"}, {"month": "6月", "name": "多格式解码器", "brand": "TANDBERG TV", "model": "RX8200/BAS", "code": "X074343", "location": "E-350 KU卫星车", "desc": "无法正常开机", "date": "2026-06-23", "solution": "此设备为E-350 KU卫星车备机", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "高清编码调制器", "brand": "TANDBERG TV", "model": "EN8040", "code": "X094362", "location": "E-350 KU卫星车", "desc": "偶发自动重启", "date": "2026-06-23", "solution": "此设备为E-350 KU卫星车备机", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "6楼UPS机房UPS上口无柴油发电机供电保障", "brand": "", "model": "", "code": "", "location": "", "desc": "", "date": "", "solution": "", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "3楼3号演播室UPS上口无柴油发电机供电保障", "brand": "", "model": "", "code": "", "location": "", "desc": "", "date": "", "solution": "", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "无工艺专用备用变压器", "brand": "", "model": "", "code": "", "location": "", "desc": "", "date": "", "solution": "", "status": "待处理", "team": "综合传输组"}, {"month": "6月", "name": "监视器", "brand": "尊正", "model": "LM-2461W", "code": "X133748", "location": "10号演播室标题监看", "desc": "无图像，有水平、宽条的大色块", "date": "2026.6.12", "solution": "替换备份设备", "status": "维修中/解决中", "team": "新闻制作组"}, {"month": "6月", "name": "吊挂系统", "brand": "华晨", "model": "", "code": "", "location": "10、11、12号演播室", "desc": "部分吊杆出现下降或上升不受控现象，11、12号演播室部分手动吊杆出现伸缩方管拉不出或自动下滑现象。", "date": "末次维保为2021年10月", "solution": "", "status": "维修中/解决中", "team": "新闻制作组"}, {"month": "6月", "name": "调音台控制面板", "brand": "斯泰克", "model": "AURATUS T2Z1", "code": "X132809", "location": "12号演播室主调音台", "desc": "输出模块频繁自动重启的现象，重启后主输出推子无法复位", "date": "2026.6.17", "solution": "", "status": "维修中/解决中", "team": "新闻制作组"}, {"month": "6月", "name": "抽湿机", "brand": "", "model": "", "code": "X164713", "location": "3楼配音间走廊", "desc": "报警", "date": "2026.6.18", "solution": "", "status": "已维修/已解决", "team": "新闻制作组"}];
 
 function showDetail(filter) {
     var filtered = filter === '全部' ? allRecords : allRecords.filter(function(r) { return r.status === filter; });
