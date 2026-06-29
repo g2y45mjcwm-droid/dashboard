@@ -334,7 +334,7 @@
 <div class="header">
     <h1>播出保障部故障设备及隐患清单</h1>
     <div class="subtitle">2026年度 · 数据看板</div>
-    <div class="update-time">数据更新时间：2026年06月29日 16:48</div>
+    <div class="update-time">数据更新时间：2026年06月29日 16:52</div>
 </div>
 
 <div class="stats-grid">
@@ -790,15 +790,23 @@ function showInstallGuide() {
         });
         return;
     }
-    // iOS 没有 beforeinstallprompt，显示手动指引
+    // 所有其他情况都显示手动安装指引
+    showManualInstallToast();
+}
+
+function showManualInstallToast() {
+    var old = document.getElementById('manualInstallToast');
+    if (old) old.remove();
     var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    var isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-    if (isIOS && isSafari) {
-        document.getElementById('iosGuide').classList.add('active');
-    } else {
-        // 其他浏览器，尝试显示通用提示
-        alert('请通过浏览器菜单中的「添加到主屏幕」或「安装应用」功能将看板安装到桌面。');
-    }
+    var msg = isIOS
+        ? '请点击底部分享按钮 ⬆️ → 选择"添加到主屏幕"'
+        : '请点击浏览器菜单 ⋮ → 选择"添加到主屏幕"或"安装应用"';
+    var toast = document.createElement('div');
+    toast.id = 'manualInstallToast';
+    toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;z-index:10000;max-width:80vw;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.3);';
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(function() { if (toast.parentNode) toast.remove(); }, 4000);
 }
 
 function dismissInstall() {
