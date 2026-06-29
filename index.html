@@ -334,7 +334,7 @@
 <div class="header">
     <h1>播出保障部故障设备及隐患清单</h1>
     <div class="subtitle">2026年度 · 数据看板</div>
-    <div class="update-time">数据更新时间：2026年06月29日 16:52</div>
+    <div class="update-time">数据更新时间：2026年06月29日 17:08</div>
 </div>
 
 <div class="stats-grid">
@@ -844,32 +844,6 @@ function hideInstallUI() {
 
 function closeIosGuide() {
     document.getElementById('iosGuide').classList.remove('active');
-}
-
-// 检查是否已经是 standalone 模式（已安装）
-if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-    // 已安装，隐藏安装相关UI
-    document.getElementById('installBtn').style.display = 'none';
-    document.getElementById('installBanner').classList.remove('show');
-} else {
-    // 设置安装引导文案
-    var ua = navigator.userAgent;
-    var hint = document.getElementById('installHint');
-    if (/Chrome|CriOS/.test(ua) && !/Safari/.test(ua)) {
-        hint.textContent = 'Chrome 浏览器支持一键安装';
-    } else if (/Edg/.test(ua)) {
-        hint.textContent = 'Edge 浏览器支持一键安装';
-    } else if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
-        hint.textContent = 'Safari 浏览器 → 分享 → 添加到主屏幕';
-    } else {
-        hint.textContent = '通过浏览器菜单添加到桌面';
-    }
-    // 非 standalone 模式，延迟显示安装引导条
-    if (!localStorage.getItem('installBannerDismissed')) {
-        setTimeout(function() {
-            document.getElementById('installBanner').classList.add('show');
-        }, 2000);
-    }
 }
 
 // 监听 appinstalled 事件
