@@ -569,17 +569,6 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
             .then(function(registration) {
                 console.log('ServiceWorker 注册成功，作用域:', registration.scope);
-                // 监听SW更新，新SW激活后刷新一次（防止循环）
-                var hasReloaded = false;
-                registration.addEventListener('updatefound', function() {
-                    var newWorker = registration.installing;
-                    newWorker.addEventListener('statechange', function() {
-                        if (newWorker.state === 'activated' && !hasReloaded) {
-                            hasReloaded = true;
-                            window.location.reload();
-                        }
-                    });
-                });
             })
             .catch(function(error) {
                 console.log('ServiceWorker 注册失败:', error);
@@ -772,11 +761,29 @@ window.addEventListener('beforeinstallprompt', function(e) {
     deferredPrompt = e;
     // 显示安装按钮
     document.getElementById('installBtn').style.display = 'inline-flex';
-    // 自动显示引导条（如果之前没关闭过）
-    if (!localStorage.getItem('installBannerDismissed')) {
-        document.getElementById('installBanner').classList.add('show');
-    }
 });
+
+// 自动显示安装引导条（所有浏览器都显示，根据类型显示不同提示）
+function initInstallBanner() {
+    if (localStorage.getItem('installBannerDismissed')) return;
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) return;
+    var ua = navigator.userAgent;
+    var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var hint = document.getElementById('installHint');
+    if (isIOS) {
+        hint.textContent = 'Safari → 分享 → 添加到主屏幕';
+    } else if (/Chrome|CriOS/.test(ua) && !/Edg|Safari/.test(ua)) {
+        hint.textContent = '支持一键安装到桌面';
+    } else if (/Edg/.test(ua)) {
+        hint.textContent = '支持一键安装到桌面';
+    } else {
+        hint.textContent = '通过浏览器菜单添加到桌面';
+    }
+    setTimeout(function() {
+        document.getElementById('installBanner').classList.add('show');
+    }, 2000);
+}
+initInstallBanner();
 
 function showInstallGuide() {
     // 如果浏览器支持原生安装提示
@@ -791,22 +798,37 @@ function showInstallGuide() {
         return;
     }
     // 所有其他情况都显示手动安装指引
-    showManualInstallToast();
+    showInstallOverlay();
 }
 
-function showManualInstallToast() {
-    var old = document.getElementById('manualInstallToast');
+function showInstallOverlay() {
+    var old = document.getElementById('installOverlay');
     if (old) old.remove();
-    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    var msg = isIOS
-        ? '请点击底部分享按钮 ⬆️ → 选择"添加到主屏幕"'
-        : '请点击浏览器菜单 ⋮ → 选择"添加到主屏幕"或"安装应用"';
-    var toast = document.createElement('div');
-    toast.id = 'manualInstallToast';
-    toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;z-index:10000;max-width:80vw;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.3);';
-    toast.textContent = msg;
-    document.body.appendChild(toast);
-    setTimeout(function() { if (toast.parentNode) toast.remove(); }, 4000);
+    var ua = navigator.userAgent;
+    var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isChrome = /Chrome|CriOS/.test(ua) && !/Edg|Safari/.test(ua);
+    var isEdge = /Edg/.test(ua);
+    var steps = '';
+    if (isIOS) {
+        steps = '<li>点击 Safari 底部的 <strong>「分享」</strong> 按钮 <span style="font-size:18px">⬆️</span></li><li>向下滚动，选择 <strong>「添加到主屏幕」</strong></li><li>点击右上角 <strong>「添加」</strong> 确认</li>';
+    } else if (isChrome) {
+        steps = '<li>点击右上角 <strong>⋮</strong> 菜单</li><li>选择 <strong>「安装应用」</strong> 或 <strong>「添加到主屏幕」</strong></li>';
+    } else if (isEdge) {
+        steps = '<li>点击右上角 <strong>⋯</strong> 菜单</li><li>选择 <strong>「安装应用」</strong> 或 <strong>「添加到手机屏幕」</strong></li>';
+    } else {
+        steps = '<li>点击浏览器菜单按钮</li><li>选择 <strong>「添加到主屏幕」</strong> 或 <strong>「安装应用」</strong></li>';
+    }
+    var overlay = document.createElement('div');
+    overlay.id = 'installOverlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;display:flex;justify-content:center;align-items:center;backdrop-filter:blur(6px);';
+    overlay.innerHTML = '<div style="background:linear-gradient(135deg,#1e1e4a,#2a2a5a);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:28px 24px;max-width:400px;width:90%;text-align:center;color:#e0e0e0;">' +
+        '<div style="font-size:48px;margin-bottom:12px;">📲</div>' +
+        '<h3 style="font-size:18px;margin-bottom:16px;color:#00d2ff;">添加到桌面</h3>' +
+        '<ol style="text-align:left;font-size:15px;line-height:2.2;color:#ccc;padding-left:20px;">' + steps + '</ol>' +
+        '<button onclick="this.closest(\'#installOverlay\').remove()" style="margin-top:20px;padding:10px 32px;background:rgba(0,210,255,0.15);border:1px solid rgba(0,210,255,0.3);border-radius:10px;color:#00d2ff;font-size:14px;cursor:pointer;">我知道了</button>' +
+        '</div>';
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
 }
 
 function dismissInstall() {
