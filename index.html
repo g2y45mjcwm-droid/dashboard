@@ -334,7 +334,7 @@
 <div class="header">
     <h1>播出保障部故障设备及隐患清单</h1>
     <div class="subtitle">2026年度 · 数据看板</div>
-    <div class="update-time">数据更新时间：2026年06月29日 16:19</div>
+    <div class="update-time">数据更新时间：2026年06月29日 16:48</div>
 </div>
 
 <div class="stats-grid">
@@ -563,21 +563,19 @@
 </div>
 
 <script>
-// 注册 Service Worker + 自动检测更新
+// 注册 Service Worker（不带时间戳，由浏览器自动检测内容变化）
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        var swUrl = './sw.js?v=' + new Date().getTime();
-        navigator.serviceWorker.register(swUrl)
+        navigator.serviceWorker.register('./sw.js')
             .then(function(registration) {
                 console.log('ServiceWorker 注册成功，作用域:', registration.scope);
-                // 每次页面加载时检查SW更新
-                registration.update();
-                // 监听SW更新，新SW就绪后自动刷新
+                // 监听SW更新，新SW激活后刷新一次（防止循环）
+                var hasReloaded = false;
                 registration.addEventListener('updatefound', function() {
                     var newWorker = registration.installing;
                     newWorker.addEventListener('statechange', function() {
-                        if (newWorker.state === 'activated') {
-                            // 新SW已激活，自动刷新页面显示最新内容
+                        if (newWorker.state === 'activated' && !hasReloaded) {
+                            hasReloaded = true;
                             window.location.reload();
                         }
                     });
