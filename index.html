@@ -769,8 +769,11 @@ function initInstallBanner() {
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) return;
     var ua = navigator.userAgent;
     var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isHarmonyOS = /HarmonyOS|HMSCore|OpenHarmony/.test(ua);
     var hint = document.getElementById('installHint');
-    if (isIOS) {
+    if (isHarmonyOS) {
+        hint.textContent = '华为浏览器 → 菜单 → 添加到桌面';
+    } else if (isIOS) {
         hint.textContent = 'Safari → 分享 → 添加到主屏幕';
     } else if (/Chrome|CriOS/.test(ua) && !/Edg|Safari/.test(ua)) {
         hint.textContent = '支持一键安装到桌面';
@@ -806,10 +809,13 @@ function showInstallOverlay() {
     if (old) old.remove();
     var ua = navigator.userAgent;
     var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isHarmonyOS = /HarmonyOS|HMSCore|OpenHarmony/.test(ua);
     var isChrome = /Chrome|CriOS/.test(ua) && !/Edg|Safari/.test(ua);
     var isEdge = /Edg/.test(ua);
     var steps = '';
-    if (isIOS) {
+    if (isHarmonyOS) {
+        steps = '<li>点击浏览器右上角 <strong>⋮</strong>（或底部菜单）</li><li>选择 <strong>「添加到桌面」</strong></li><li>确认名称后点击 <strong>「添加」</strong></li><li style="color:#888;font-size:13px;">如果没有该选项，可尝试 <strong>「收藏」→ 长按收藏项 →「添加到桌面」</strong></li>';
+    } else if (isIOS) {
         steps = '<li>点击 Safari 底部的 <strong>「分享」</strong> 按钮 <span style="font-size:18px">⬆️</span></li><li>向下滚动，选择 <strong>「添加到主屏幕」</strong></li><li>点击右上角 <strong>「添加」</strong> 确认</li>';
     } else if (isChrome) {
         steps = '<li>点击右上角 <strong>⋮</strong> 菜单</li><li>选择 <strong>「安装应用」</strong> 或 <strong>「添加到主屏幕」</strong></li>';
