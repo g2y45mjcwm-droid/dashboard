@@ -1,12 +1,9 @@
-const CACHE_NAME = 'dashboard-v202606291604';
+const CACHE_NAME = 'dashboard-v202606291619';
 const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json',
   'https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js'
 ];
 
-// 安装时缓存资源
+// 安装时缓存静态资源 + 立即激活
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -15,26 +12,19 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache);
       })
   );
+  self.skipWaiting();
 });
 
-// 拦截请求：HTML 用网络优先（确保最新数据），静态资源用缓存优先（加速加载）
+// 拦截请求：HTML 始终走网络（no-store），静态资源缓存优先
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const isHTML = event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname.endsWith('/');
   
   if (isHTML) {
-    // HTML 页面：网络优先，确保每次都能看到最新数据
+    // HTML 页面：强制走网络，绝不使用缓存
     event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          if (response && response.status === 200) {
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-          }
-          return response;
-        })
+      fetch(new Request(event.request, { cache: 'no-store' }))
+        .then(response => response)
         .catch(() => caches.match(event.request).then(r => r || Response.error()))
     );
   } else {
@@ -55,7 +45,7 @@ self.addEventListener('fetch', event => {
   }
 });
 
-// 更新时清理旧缓存 + 立即接管页面（首次访问即可触发安装提示）
+// 激活时清理旧缓存 + 立即接管所有页面
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
