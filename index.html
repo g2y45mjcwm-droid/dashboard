@@ -765,7 +765,6 @@ window.addEventListener('beforeinstallprompt', function(e) {
 
 // 自动显示安装引导条（所有浏览器都显示，根据类型显示不同提示）
 function initInstallBanner() {
-    if (localStorage.getItem('installBannerDismissed')) return;
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) return;
     var ua = navigator.userAgent;
     var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
