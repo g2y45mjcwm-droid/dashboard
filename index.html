@@ -334,7 +334,7 @@
 <div class="header">
     <h1>播出保障部故障设备及隐患清单</h1>
     <div class="subtitle">2026年度 · 数据看板</div>
-    <div class="update-time">数据更新时间：2026年07月31日 19:03</div>
+    <div class="update-time">数据更新时间：2026年08月01日 09:03</div>
 </div>
 
 <div class="stats-grid">
@@ -368,7 +368,7 @@
             <button class="month-btn" onclick="filterByMonth('全部')">全部</button>
             <button class="month-btn " onclick="filterByMonth('5月')">5月</button>
             <button class="month-btn " onclick="filterByMonth('6月')">6月</button>
-            <button class="month-btn active" onclick="filterByMonth('7月')">7月</button>
+            <button class="month-btn " onclick="filterByMonth('7月')">7月</button>
         </div>
         <input type="text" id="tableSearch" placeholder="搜索设备名称、厂家、型号..." onkeyup="filterTable()" style="
             flex: 1; min-width: 200px; max-width: 360px; padding: 8px 14px; font-size: 13px;
@@ -582,7 +582,7 @@
                 <td><span class="badge badge-unfixable status-badge" onclick="showDetail('无法维修/无法解决')">无法维修/无法解决</span></td>
                 <td>融媒制作组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>三路数字音频自动切换器</td>
                 <td>英夫美迪</td>
@@ -595,7 +595,7 @@
                 <td><span class="badge badge-pending status-badge" onclick="showDetail('待处理')">待处理</span></td>
                 <td>综合传输组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>三路数字音频自动切换器</td>
                 <td>英夫美迪</td>
@@ -608,7 +608,7 @@
                 <td><span class="badge badge-pending status-badge" onclick="showDetail('待处理')">待处理</span></td>
                 <td>综合传输组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>运动相机</td>
                 <td>大疆</td>
@@ -621,7 +621,7 @@
                 <td><span class="badge badge-in-progress status-badge" onclick="showDetail('维修中/解决中')">维修中/解决中</span></td>
                 <td>融媒制作组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>音频幅度检测仪</td>
                 <td>福川科技</td>
@@ -634,7 +634,7 @@
                 <td><span class="badge badge-pending status-badge" onclick="showDetail('待处理')">待处理</span></td>
                 <td>综合传输组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>通话面板</td>
                 <td>Clear Com</td>
@@ -647,7 +647,7 @@
                 <td><span class="badge badge-in-progress status-badge" onclick="showDetail('维修中/解决中')">维修中/解决中</span></td>
                 <td>新闻制作组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>3演灯具</td>
                 <td></td>
@@ -660,7 +660,7 @@
                 <td><span class="badge badge-in-progress status-badge" onclick="showDetail('维修中/解决中')">维修中/解决中</span></td>
                 <td>新闻制作组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>蓝光高清录像机</td>
                 <td>索尼</td>
@@ -673,7 +673,7 @@
                 <td><span class="badge badge-resolved status-badge" onclick="showDetail('已维修/已解决')">已维修/已解决</span></td>
                 <td>融媒制作组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>高清监视器</td>
                 <td>尊正</td>
@@ -686,7 +686,7 @@
                 <td><span class="badge badge-resolved status-badge" onclick="showDetail('已维修/已解决')">已维修/已解决</span></td>
                 <td>融媒制作组</td>
             </tr>
-            <tr data-month="7月" style="display:">
+            <tr data-month="7月" style="display:none">
                 <td>7月</td>
                 <td>空调（室外机）</td>
                 <td>大金</td>
@@ -812,7 +812,7 @@ teamChart.setOption({
     grid: { left: '25%', right: '10%', bottom: '10%', top: '10%' }
 });
 
-var currentMonthFilter = '7月';
+var currentMonthFilter = '8月';
 
 function filterByMonth(month) {
     currentMonthFilter = month;
