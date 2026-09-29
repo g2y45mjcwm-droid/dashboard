@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dashboard-v202609291205';
+const CACHE_NAME = 'dashboard-v202609291304';
 const urlsToCache = [
   'https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js'
 ];
