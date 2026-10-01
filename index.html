@@ -334,7 +334,7 @@
 <div class="header">
     <h1>播出保障部故障设备及隐患清单</h1>
     <div class="subtitle">2026年度 · 数据看板</div>
-    <div class="update-time">数据更新时间：2026年09月30日 19:02</div>
+    <div class="update-time">数据更新时间：2026年10月01日 09:20</div>
 </div>
 
 <div class="stats-grid">
@@ -370,7 +370,7 @@
             <button class="month-btn " onclick="filterByMonth('6月')">6月</button>
             <button class="month-btn " onclick="filterByMonth('7月')">7月</button>
             <button class="month-btn " onclick="filterByMonth('8月')">8月</button>
-            <button class="month-btn active" onclick="filterByMonth('9月')">9月</button>
+            <button class="month-btn " onclick="filterByMonth('9月')">9月</button>
         </div>
         <input type="text" id="tableSearch" placeholder="搜索设备名称、厂家、型号..." onkeyup="filterTable()" style="
             flex: 1; min-width: 200px; max-width: 360px; padding: 8px 14px; font-size: 13px;
@@ -714,7 +714,7 @@
                 <td><span class="badge badge-in-progress status-badge" onclick="showDetail('维修中/解决中')">维修中/解决中</span></td>
                 <td>综合传输组</td>
             </tr>
-            <tr data-month="9月" style="display:">
+            <tr data-month="9月" style="display:none">
                 <td>9月</td>
                 <td>空调</td>
                 <td>大金</td>
@@ -840,7 +840,7 @@ teamChart.setOption({
     grid: { left: '25%', right: '10%', bottom: '10%', top: '10%' }
 });
 
-var currentMonthFilter = '9月';
+var currentMonthFilter = '10月';
 
 function filterByMonth(month) {
     currentMonthFilter = month;
